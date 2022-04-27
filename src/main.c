@@ -11,9 +11,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <lib.h>
 
 int main() 
 {
+    // A function call to show how functions can be placed in external source files. 
+    libfunction();
+
     char filename[128];
     char* name = "hello";
     char* extension = ".txt";
