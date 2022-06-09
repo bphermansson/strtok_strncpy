@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <lib.h>
 
+#define LENGTH 300
+
 int main() 
 {
     // A function call to show how functions can be placed in external source files. 
@@ -35,9 +37,8 @@ int main()
     strncat(filename, extension, (sizeof(filename) - strlen(filename)) );
     printf("Filename is %s\n", filename);
 
-    
-    char text_txt[]= "This is, a - test";
-    char buf[300];
+    char text_txt[LENGTH]= "This is, a - test";
+    char buf[LENGTH];
     printf ("Splitting string \"%s\" into tokens:\n",text_txt);
     
     char *pch; 
@@ -57,5 +58,49 @@ int main()
     }
     printf ("All the bits: %s\n",buf);
     
+    printf("Length: %d\n", strlen(buf));
+
+    printf("Round 2\n");
+    memset(buf, 0, LENGTH);
+    char oldbuf[10][300];
+    char whole_text[10][300];
+    int line_counter=0;
+
+    strcpy (text_txt, "This is, a - test with a much longer text. It has more letters, more spaces, more of everything. But still is totally meaningless. ");
+    pch = strtok (text_txt, " ,.-");    // Split text. 
+    strcpy(buf,pch);                    // Store first part.
+    
+    int slen=0;
+    strcpy(whole_text[line_counter], buf);  // Save first item
+    strcat(whole_text[line_counter], " ");
+    strcpy(oldbuf[line_counter], buf);      // Save old buffer
+
+    while (pch != NULL)
+    {
+        pch = strtok (NULL, " ,-");
+        if(pch != NULL) 
+        {
+            char *T = pch;
+            strcat(buf,T);                         // Add next word  
+            strcat(whole_text[line_counter], T);
+            strcat(whole_text[line_counter], " ");
+
+            if (strlen(whole_text[line_counter]) >= 15)   // Oops, got to long, go to next line.
+            {
+                printf ("%s - %d\n", whole_text[line_counter], strlen(whole_text[line_counter]));
+                strcpy(whole_text[line_counter],oldbuf[line_counter]);  // Get back previous line
+                line_counter++;
+            }
+            strcat(buf,T);
+            slen = strlen(buf);
+            strcat(oldbuf[line_counter], T);
+        }
+        if(pch == NULL)
+        {
+            printf ("%s - %d\n", whole_text[line_counter], strlen(whole_text[line_counter]));   // The last word
+        }
+    }
+   // printf ("slen: %d. All the bits: %s\n", slen, buf);
+
     return 0;
 }
