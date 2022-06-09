@@ -4,6 +4,6 @@
 
 int libfunction()
 {
-    printf("Just a silly lib function that does absolutely nothing useful at all");
+    printf("Just a silly lib function that does absolutely nothing useful at all\n");
     return 0;
 }

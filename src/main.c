@@ -58,9 +58,9 @@ int main()
     }
     printf ("All the bits: %s\n",buf);
     
-    printf("Length: %d\n", strlen(buf));
+    printf("Length: %lu\n", strlen(buf));
 
-    printf("Round 2\n");
+    printf("Round 2, split a long text in parts with a certain length.\n");
     memset(buf, 0, LENGTH);
     char oldbuf[10][300];
     char whole_text[10][300];
@@ -69,8 +69,6 @@ int main()
     strcpy (text_txt, "This is, a - test with a much longer text. It has more letters, more spaces, more of everything. But still is totally meaningless. ");
     pch = strtok (text_txt, " ,.-");    // Split text. 
     strcpy(buf,pch);                    // Store first part.
-    
-    int slen=0;
     strcpy(whole_text[line_counter], buf);  // Save first item
     strcat(whole_text[line_counter], " ");
     strcpy(oldbuf[line_counter], buf);      // Save old buffer
@@ -87,20 +85,17 @@ int main()
 
             if (strlen(whole_text[line_counter]) >= 15)   // Oops, got to long, go to next line.
             {
-                printf ("%s - %d\n", whole_text[line_counter], strlen(whole_text[line_counter]));
+                printf ("%s - %lu\n", whole_text[line_counter], strlen(whole_text[line_counter]));
                 strcpy(whole_text[line_counter],oldbuf[line_counter]);  // Get back previous line
                 line_counter++;
             }
             strcat(buf,T);
-            slen = strlen(buf);
             strcat(oldbuf[line_counter], T);
         }
         if(pch == NULL)
         {
-            printf ("%s - %d\n", whole_text[line_counter], strlen(whole_text[line_counter]));   // The last word
+            printf ("%s - %lu\n", whole_text[line_counter], strlen(whole_text[line_counter]));   // The last word
         }
     }
-   // printf ("slen: %d. All the bits: %s\n", slen, buf);
-
     return 0;
 }
